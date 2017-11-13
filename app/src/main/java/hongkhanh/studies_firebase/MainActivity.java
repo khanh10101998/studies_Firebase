@@ -30,6 +30,7 @@ DatabaseReference mData;
     String Id_user;
     ListView listView;
     ArrayList<Song> infoSongList;
+    ArrayList<String> namesonglist;
     ArrayAdapter adapter=null;
 
 
@@ -68,7 +69,7 @@ DatabaseReference mData;
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String song = infoSongList.get(i).getSong();
                 String image = infoSongList.get(i).getImage();
-                Toast.makeText(MainActivity.this, song , Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, song + "image"+ image , Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -78,7 +79,8 @@ DatabaseReference mData;
         email = intent.getStringExtra("email");
         Id_user = intent.getStringExtra("ID_user");
         infoSongList = new ArrayList<Song>();
-        adapter = new ArrayAdapter(this,android.R.layout.simple_expandable_list_item_1, infoSongList);
+        namesonglist = new ArrayList<String>();
+        adapter = new ArrayAdapter(this,android.R.layout.simple_expandable_list_item_1, namesonglist);
         listView.setAdapter(adapter);
 
         mData = FirebaseDatabase.getInstance().getReference();
@@ -100,6 +102,7 @@ DatabaseReference mData;
                 songData.setSinger(song.singer);
                 songData.setSong(song.song);
                 infoSongList.add(songData);
+                namesonglist.add(song.song);
 //                infoSongList.add(song.song+" - "+song.singer);
                 adapter.notifyDataSetChanged();
                 System.out.println(song.song + "khanh ne");
